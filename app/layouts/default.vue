@@ -3,7 +3,7 @@
     <AppHeader>
       <template #action>
         <slot name="action">
-          <AppButton to="/materials/new" aria-label="Создать историю" square-on-mobile>
+          <AppButton to="/materials/new" aria-label="Создать историю" square-on-mobile no-prefetch>
             Создать историю
             <template #icon>
               <AppIcon name="plus" />

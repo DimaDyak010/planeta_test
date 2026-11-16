@@ -34,6 +34,7 @@ const props = withDefaults(defineProps<{
   squareOnMobile?: boolean
   type?: 'button' | 'submit' | 'reset'
   to?: NuxtLinkProps['to']
+  noPrefetch?: boolean
   disabled?: boolean
   loading?: boolean
 }>(), {
@@ -55,7 +56,7 @@ const elementProps = computed(() => {
   if (!props.to) return { type: props.type, disabled: unavailable.value }
   return unavailable.value
     ? { role: 'link', 'aria-disabled': true }
-    : { to: props.to }
+    : { to: props.to, noPrefetch: props.noPrefetch }
 })
 
 function handleClick(event: MouseEvent) {
