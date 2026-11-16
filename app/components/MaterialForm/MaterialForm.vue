@@ -1,5 +1,5 @@
 <template>
-  <form class="composer__form" @submit.prevent="submit">
+  <form class="composer__form" novalidate @submit.prevent="submit">
     <div class="composer__fields">
       <input v-model="draft.title" class="composer__title" aria-label="Заголовок" placeholder="Введите заголовок"
              required :maxlength="MATERIAL_LIMITS.title">
@@ -24,27 +24,28 @@ const props = defineProps<{ saving: boolean }>()
 const emit = defineEmits<{ submit: [material: MaterialInput] }>()
 const error = defineModel<string>('error', { required: true })
 
-const draft = reactive({ title: '', summary: '', datetime: '' })
+const draft = ref({ title: '', summary: '', datetime: '' })
 const editor = useTemplateRef('editor')
 
 onMounted(() => {
   const now = new Date()
   const local = new Date(now.getTime() - now.getTimezoneOffset() * 60_000)
-  draft.datetime = local.toISOString().slice(0, 16)
+  draft.value.datetime = local.toISOString().slice(0, 16)
 })
 
 function submit() {
   if (props.saving) return
   error.value = ''
-  if (!draft.title.trim() || !draft.summary.trim()) {
+  const { title, summary, datetime } = draft.value
+  if (!title.trim() || !summary.trim()) {
     error.value = 'Введите заголовок и краткое описание.'
     return
   }
-  if (draft.title.length > MATERIAL_LIMITS.title || draft.summary.length > MATERIAL_LIMITS.short_description) {
-    error.value = 'Проверьте длину заголовка и краткого описания.'
+  if (title.length > MATERIAL_LIMITS.title || summary.length > MATERIAL_LIMITS.short_description) {
+    error.value = `Заголовок — до ${MATERIAL_LIMITS.title} символов, краткое описание — до ${MATERIAL_LIMITS.short_description}.`
     return
   }
-  const date = new Date(draft.datetime)
+  const date = new Date(datetime)
   if (Number.isNaN(date.getTime())) {
     error.value = 'Укажите дату и время создания.'
     editor.value?.focusDate()
@@ -57,8 +58,8 @@ function submit() {
   }
 
   emit('submit', {
-    title: draft.title,
-    short_description: draft.summary,
+    title,
+    short_description: summary,
     datetime: date.toISOString(),
     description_html: content.html,
     description_json: content.json,
