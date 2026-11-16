@@ -38,7 +38,9 @@ type HeadingLevel = 2 | 3
 type Format = 'paragraph' | 'blockquote' | HeadingLevel
 
 defineProps<{ headings: readonly HeadingLevel[] }>()
-const emit = defineEmits<{ format: [format: Format] }>()
+const emit = defineEmits<{
+  (event: 'format', format: Format): void
+}>()
 
 const formatsId = useId()
 const anchor = `--${formatsId}`

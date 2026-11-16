@@ -9,7 +9,7 @@
     </div>
 
     <ClientOnly>
-      <MaterialEditor ref="editor" v-model:datetime="draft.datetime" />
+      <MaterialEditor ref="editor" v-model:datetime="draft.datetime" @content-change="updateError" />
     </ClientOnly>
 
     <p v-if="error" class="composer__error" role="alert">{{ error }}</p>
@@ -21,11 +21,15 @@ import { MATERIAL_LIMITS, type MaterialInput } from '#shared/types/material'
 import MaterialEditor from './MaterialEditor.vue'
 
 const props = defineProps<{ saving: boolean }>()
-const emit = defineEmits<{ submit: [material: MaterialInput] }>()
+const emit = defineEmits<{
+  (event: 'submit', material: MaterialInput): void
+}>()
 const error = ref('')
 
 const draft = ref({ title: '', summary: '', datetime: '' })
 const editor = useTemplateRef('editor')
+
+watch(() => [draft.value.title, draft.value.summary, draft.value.datetime], updateError)
 
 onMounted(() => {
   const now = new Date()
@@ -35,22 +39,14 @@ onMounted(() => {
 
 function submit() {
   if (props.saving) return
-  error.value = ''
+  error.value = getValidationError()
+  if (error.value) {
+    if (error.value === 'Укажите дату и время создания.') editor.value?.focusDate()
+    return
+  }
+
   const { title, summary, datetime } = draft.value
-  if (!title.trim() || !summary.trim()) {
-    error.value = 'Введите заголовок и краткое описание.'
-    return
-  }
-  if (title.length > MATERIAL_LIMITS.title || summary.length > MATERIAL_LIMITS.short_description) {
-    error.value = `Заголовок — до ${MATERIAL_LIMITS.title} символов, краткое описание — до ${MATERIAL_LIMITS.short_description}.`
-    return
-  }
   const date = new Date(datetime)
-  if (Number.isNaN(date.getTime())) {
-    error.value = 'Укажите дату и время создания.'
-    editor.value?.focusDate()
-    return
-  }
   const content = editor.value?.getContent()
   if (!content) {
     error.value = 'Введите текст материала.'
@@ -64,6 +60,29 @@ function submit() {
     description_html: content.html,
     description_json: content.json,
   })
+}
+
+function updateError() {
+  if (error.value) error.value = getValidationError()
+}
+
+function getValidationError() {
+  const { title, summary, datetime } = draft.value
+  if (!title.trim() || !summary.trim()) {
+    return 'Введите заголовок и краткое описание.'
+  }
+  if (title.length > MATERIAL_LIMITS.title || summary.length > MATERIAL_LIMITS.short_description) {
+    return `Заголовок — до ${MATERIAL_LIMITS.title} символов, краткое описание — до ${MATERIAL_LIMITS.short_description}.`
+  }
+  const date = new Date(datetime)
+  if (Number.isNaN(date.getTime())) {
+    return 'Укажите дату и время создания.'
+  }
+  const content = editor.value?.getContent()
+  if (!content) {
+    return 'Введите текст материала.'
+  }
+  return ''
 }
 </script>
 

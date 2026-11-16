@@ -16,6 +16,9 @@ import MaterialDatePicker from './MaterialDatePicker.vue'
 import MaterialFormatMenu from './MaterialFormatMenu.vue'
 
 const headings = [2, 3] as const
+const emit = defineEmits<{
+  (event: 'content-change'): void
+}>()
 const datetime = defineModel<string>('datetime', { required: true })
 const datePicker = useTemplateRef('datePicker')
 const editor = useEditor({
@@ -33,6 +36,7 @@ const editor = useEditor({
       role: 'textbox',
     },
   },
+  onUpdate: () => emit('content-change'),
 })
 
 function applyFormat(format: 'paragraph' | 'blockquote' | typeof headings[number]) {
