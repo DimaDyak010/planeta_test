@@ -15,8 +15,7 @@ export function parseMaterial(value: unknown, submitted?: MaterialInput): Materi
   if (!value || typeof value !== 'object') throw invalidMaterialsResponse()
   const item = { ...submitted, ...value } as Partial<Material>
   if (
-    (typeof item.id !== 'string' && typeof item.id !== 'number') ||
-    item.id === '' ||
+    typeof item.id !== 'number' || !Number.isSafeInteger(item.id) ||
     typeof item.title !== 'string' ||
     typeof item.short_description !== 'string' ||
     typeof item.datetime !== 'string' ||

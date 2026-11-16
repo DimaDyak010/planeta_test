@@ -7,7 +7,7 @@ export interface MaterialInput {
 }
 
 export interface Material extends Omit<MaterialInput, 'description_json'> {
-  id: string | number
+  id: number
   description_json?: unknown
 }
 

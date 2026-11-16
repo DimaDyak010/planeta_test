@@ -4,7 +4,17 @@ export function useMaterials() {
   const lastCreated = useState<Material | null>('last-created-material', () => null)
 
   function loadMaterials() {
-    return useFetch<Material[]>('/api/materials', { key: 'materials' })
+    return useFetch<Material[]>('/api/materials')
+  }
+
+  function loadMaterial(id: number) {
+    const material = lastCreated.value
+    if (material?.id === id) {
+      lastCreated.value = null
+      return { data: shallowRef(material), error: shallowRef(undefined) }
+    }
+
+    return useFetch<Material>(`/api/materials/${id}`)
   }
 
   async function createMaterial(body: MaterialInput) {
@@ -13,9 +23,12 @@ export function useMaterials() {
       body,
     })
     lastCreated.value = material
-    clearNuxtData('materials')
     return material
   }
 
-  return { loadMaterials, lastCreated, createMaterial }
+  return {
+    loadMaterials,
+    loadMaterial,
+    createMaterial
+  }
 }
