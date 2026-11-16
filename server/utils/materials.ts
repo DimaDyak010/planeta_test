@@ -2,24 +2,13 @@ import type { H3Event } from 'h3'
 import sanitizeHtml from 'sanitize-html'
 import type { Material, MaterialInput } from '#shared/types/material'
 
-const materialsUrl = 'https://naukatv.ru/api/test/materials'
+const MATERIALS_URL = 'https://naukatv.ru/api/test/materials'
 
-export async function requestMaterials(event: H3Event, body?: MaterialInput): Promise<unknown> {
+export function getMaterialsUrl(event: H3Event): string {
   const { materialsAlias } = useRuntimeConfig(event)
   if (!materialsAlias) throw createError({ statusCode: 503, statusMessage: 'Materials API is unavailable' })
 
-  const url = `${materialsUrl}/${encodeURIComponent(materialsAlias)}${body ? '/save' : ''}`
-  try {
-    return await $fetch<unknown>(url, {
-      method: body ? 'POST' : 'GET',
-      body,
-      redirect: 'error',
-      retry: 0,
-      timeout: 10_000,
-    })
-  } catch {
-    throw createError({ statusCode: 502, statusMessage: 'Materials API request failed' })
-  }
+  return `${MATERIALS_URL}/${encodeURIComponent(materialsAlias)}`
 }
 
 export function parseMaterial(value: unknown, submitted?: MaterialInput): Material {

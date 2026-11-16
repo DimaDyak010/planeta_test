@@ -1,5 +1,5 @@
 import { MATERIAL_LIMITS, type MaterialInput } from '#shared/types/material'
-import { parseMaterial, requestMaterials } from '../utils/materials'
+import { createMaterial } from '../services/createMaterial'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<Partial<MaterialInput> | null>(event)
@@ -25,9 +25,7 @@ export default defineEventHandler(async (event) => {
     description_json: json,
   }
 
-  const response = await requestMaterials(event, input)
-  const envelope = response as { data?: unknown, material?: unknown } | null
-  return parseMaterial(envelope?.data ?? envelope?.material ?? response, input)
+  return createMaterial(event, input)
 })
 
 function isIsoDate(value: string) {
