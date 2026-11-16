@@ -154,6 +154,12 @@ function handleClick(event: MouseEvent) {
   }
 }
 
+@media (any-pointer: coarse) {
+  .app-button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 @media (max-width: 600px) {
   .app-button--square-on-mobile {
     width: 48px;

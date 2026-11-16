@@ -25,7 +25,7 @@ defineProps<{ material: Material }>()
   overflow-wrap: anywhere;
   transition: box-shadow .18s ease;
 
-  &:hover, &:focus-visible {
+  &:active, &:focus-visible {
     box-shadow: var(--card-shadow);
   }
   &__title {
@@ -39,6 +39,12 @@ defineProps<{ material: Material }>()
     color: var(--color-secondary);
     font-size: 16px;
     line-height: 1.2;
+  }
+}
+
+@media (hover: hover) {
+  .card:hover {
+    box-shadow: var(--card-shadow);
   }
 }
 

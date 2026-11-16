@@ -76,6 +76,12 @@ const saving = useState('saving-material', () => false)
   }
 }
 
+@media (any-pointer: coarse) {
+  .site-header__brand {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 @media (max-width: 600px) {
   .site-header__inner {
     height: 64px;
