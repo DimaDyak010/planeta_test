@@ -33,7 +33,7 @@ import logo from '~/assets/brand/logo.svg'
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 84px;
+    height: var(--site-header-height);
   }
 
   &__brand {
@@ -54,10 +54,6 @@ import logo from '~/assets/brand/logo.svg'
 }
 
 @media (max-width: 600px) {
-  .site-header__inner {
-    height: 64px;
-  }
-
   .site-header__logo {
     height: 36px;
   }

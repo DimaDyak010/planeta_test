@@ -22,7 +22,7 @@ import MaterialEditor from './MaterialEditor.vue'
 
 const props = defineProps<{ saving: boolean }>()
 const emit = defineEmits<{ submit: [material: MaterialInput] }>()
-const error = defineModel<string>('error', { required: true })
+const error = ref('')
 
 const draft = ref({ title: '', summary: '', datetime: '' })
 const editor = useTemplateRef('editor')
