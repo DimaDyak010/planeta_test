@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  click: [event: MouseEvent]
+  (event: 'click', payload: MouseEvent): void
 }>()
 
 const unavailable = computed(() => props.disabled || props.loading)
@@ -85,6 +85,9 @@ function handleClick(event: MouseEvent) {
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
+  transition:
+    background-color var(--transition-duration) ease,
+    opacity var(--transition-duration) ease;
 
   &:not(:disabled, [aria-disabled='true']):active {
     background: var(--color-action-hover);
@@ -164,6 +167,10 @@ function handleClick(event: MouseEvent) {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .app-button {
+    transition: none;
+  }
+
   .app-button__spinner :deep(svg) {
     animation: none;
   }

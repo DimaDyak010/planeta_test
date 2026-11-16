@@ -47,11 +47,16 @@ defineProps<{ material: Material }>()
     gap: var(--space-16);
     padding: var(--space-24);
     &__title {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
       font-size: 18px;
+      line-height: 22px;
     }
     &__description {
       font-size: 14px;
-      line-height: 1.3;
+      line-height: 18px;
     }
   }
 }

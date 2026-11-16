@@ -1,7 +1,12 @@
 <template>
-  <time v-if="label" :datetime="datetime" class="date" :class="`date--${variant}`">
+  <time
+    v-if="label"
+    :datetime="datetime"
+    class="date"
+    :class="`date--${variant}`"
+  >
     <AppIcon name="calendar" />
-    {{ label }}
+    <span class="date__label">{{ label }}</span>
   </time>
 </template>
 
@@ -18,6 +23,7 @@ const formatter = new Intl.DateTimeFormat('ru-RU', {
   month: 'long',
   timeZone: 'Europe/Moscow',
 })
+
 const label = computed(() => {
   const date = new Date(datetime)
   return Number.isNaN(date.getTime()) ? '' : formatter.format(date)
@@ -33,14 +39,16 @@ const label = computed(() => {
   gap: var(--space-8);
   color: var(--color-muted);
   font-size: 16px;
-  line-height: 1.3;
+
+  &__label {
+    line-height: 1;
+  }
 
   &--detail {
     --icon-height: 24px;
 
     gap: var(--space-12);
     font-size: 20px;
-    line-height: 1.4;
   }
 }
 
@@ -50,13 +58,15 @@ const label = computed(() => {
 
     font-size: 14px;
   }
+  .date--card {
+    min-block-size: 18px;
+  }
   .date--detail {
     --icon-height: 20px;
 
     gap: var(--space-8);
     font-size: 18px;
     font-weight: 500;
-    line-height: 1.2;
   }
 }
 </style>

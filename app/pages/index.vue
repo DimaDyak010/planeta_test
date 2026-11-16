@@ -36,6 +36,7 @@ const { materials } = useMaterials()
 @media (max-width: 600px) {
   .materials {
     gap: var(--space-32);
+
     &__list {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-16);
