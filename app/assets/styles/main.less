@@ -1,3 +1,5 @@
+@import './tokens.less';
+
 @font-face {
   font-family: 'Source Sans 3';
   src: url('/fonts/SourceSans3-VariableFont_wght.woff2') format('woff2');
@@ -19,13 +21,43 @@
   font-display: block;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: 'Futura PT', 'Source Sans 3', sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font: 400 20px / 1.4 var(--font-body);
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+button, textarea, input {
+  color: inherit;
+  font: inherit;
+}
+a {
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+.page-width, .article-width {
+  width: calc(100% - 2 * var(--page-gutter));
+  margin-inline: auto;
+}
+
+.page-width {
+  max-width: var(--page-width);
+}
+.article-width {
+  max-width: var(--article-width);
+}
+
+.page-title {
+  font: 600 var(--heading-size) / var(--heading-line) var(--font-heading);
+  overflow-wrap: anywhere;
 }

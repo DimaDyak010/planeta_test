@@ -1,0 +1,73 @@
+:root {
+  /* Базовые значения */
+  --palette-white: #fff;
+  --palette-gray-50: #f4f6fb;
+  --palette-gray-300: #bec2da;
+  --palette-gray-500: #81859c;
+  --palette-gray-900: #14142a;
+  --palette-blue-50: #e7f8fe;
+  --palette-blue-500: #00b2ff;
+  --palette-red-700: #b12743;
+
+  --font-family-source-sans: 'Source Sans 3';
+  --font-family-futura: 'Futura PT';
+  --font-size-24: 24px;
+  --font-size-36: 36px;
+  --line-height-tight: 1.2;
+
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+
+  --width-1014: 1014px;
+  --width-1224: 1224px;
+
+  --radius-12: 12px;
+  --radius-24: 24px;
+  --radius-32: 32px;
+
+  --shadow-raised:
+    -2px 5px 6.5px rgb(0 0 0 / 4%),
+    -9px 21px 11.5px rgb(0 0 0 / 4%),
+    -21px 48px 15.5px rgb(0 0 0 / 2%);
+
+  /* Цвета интерфейса */
+  --color-bg: var(--palette-gray-50);
+  --color-surface: var(--palette-white);
+  --color-text: var(--palette-gray-900);
+  --color-secondary: var(--palette-gray-500);
+  --color-muted: var(--palette-gray-300);
+  --color-accent: var(--palette-blue-500);
+  --color-accent-bg: var(--palette-blue-50);
+  --color-error: var(--palette-red-700);
+
+  /* Типографика */
+  --font-heading: var(--font-family-source-sans), sans-serif;
+  --font-body: var(--font-family-futura), var(--font-heading);
+  --heading-size: var(--font-size-36);
+  --heading-line: var(--line-height-tight);
+
+  /* Контейнеры и поля страницы */
+  --page-width: var(--width-1224);
+  --article-width: var(--width-1014);
+  --page-gutter: var(--space-32);
+  --page-top: var(--space-48);
+
+  /* Компоненты */
+  --radius-button: var(--radius-12);
+  --radius-card: var(--radius-24);
+  --radius-panel: var(--radius-32);
+  --card-shadow: var(--shadow-raised);
+}
+
+@media (max-width: 600px) {
+  :root {
+    --page-gutter: var(--space-16);
+    --page-top: var(--space-32);
+    --heading-size: var(--font-size-24);
+  }
+}
