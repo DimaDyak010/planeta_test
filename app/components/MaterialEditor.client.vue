@@ -1,18 +1,36 @@
 <template>
   <div class="rich-text">
-    <div class="rich-text__controls">
-      <button class="rich-text__toggle" type="button" aria-label="Формат текста"
-              :aria-expanded="formatsOpen" @click="formatsOpen = !formatsOpen">
+    <div class="rich-text__controls" :style="{ '--formats-anchor': `--${formatsId}` }">
+      <button
+        class="rich-text__toggle"
+        type="button"
+        aria-label="Формат текста"
+        :popovertarget="formatsId"
+      >
         <AppIcon name="plus" />
       </button>
-      <div v-if="formatsOpen" class="rich-text__formats" role="group" aria-label="Формат абзаца"
-           @keydown.esc="formatsOpen = false">
+
+      <div
+        :id="formatsId"
+        ref="formatsPopover"
+        class="rich-text__formats"
+        popover="auto"
+        role="group"
+        aria-label="Формат абзаца"
+      >
         <button type="button" @click="applyFormat('paragraph')">Абзац</button>
-        <button v-for="level in headings" :key="level" type="button" @click="applyFormat(level)">
+        <button
+          v-for="level in headings"
+          :key="level"
+          type="button"
+          :disabled="level === 1 && h1Unavailable"
+          @click="applyFormat(level)"
+        >
           Заголовок {{ level }}
         </button>
         <button type="button" @click="applyFormat('blockquote')">Цитата</button>
       </div>
+      <slot name="actions" />
     </div>
     <EditorContent :editor="editor" class="rich-text__input" />
   </div>
@@ -23,9 +41,11 @@ import { EditorContent, useEditor } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import AppIcon from '~/components/AppIcon.vue'
+import { countH1, SingleHeading } from '~/utils/singleHeading'
 
 const headings = [1, 2, 3] as const
-const formatsOpen = ref(false)
+const formatsId = useId()
+const formatsPopover = ref<HTMLElement | null>(null)
 const editor = useEditor({
   extensions: [
     StarterKit.configure({
@@ -33,6 +53,7 @@ const editor = useEditor({
       blockquote: {},
     }),
     Placeholder.configure({ placeholder: 'Введите текст…' }),
+    SingleHeading,
   ],
   editorProps: {
     attributes: {
@@ -43,13 +64,20 @@ const editor = useEditor({
   },
 })
 
+const h1Unavailable = computed(() => {
+  const instance = editor.value
+  return !!instance && countH1(instance.state.doc) > 0 && !instance.isActive('heading', { level: 1 })
+})
+
 function applyFormat(format: 'paragraph' | 'blockquote' | typeof headings[number]) {
-  const chain = editor.value?.chain().focus()
-  if (!chain) return
+  const instance = editor.value
+  if (!instance) return
+
+  formatsPopover.value?.hidePopover()
+  const chain = instance.chain().focus()
   if (format === 'paragraph') chain.setParagraph().run()
   else if (format === 'blockquote') chain.toggleBlockquote().run()
   else chain.toggleHeading({ level: format }).run()
-  formatsOpen.value = false
 }
 
 defineExpose({
@@ -67,12 +95,20 @@ defineExpose({
   grid-template-columns: 82px minmax(0, 1fr);
   gap: var(--space-24);
 
+  &__toggle:focus-visible,
+  &__formats button:focus-visible {
+    outline: none;
+  }
+
   &__controls {
-    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-8);
   }
   &__toggle {
     --icon-height: 20px;
 
+    anchor-name: var(--formats-anchor);
     display: grid;
     width: 32px;
     height: 32px;
@@ -83,21 +119,36 @@ defineExpose({
     background: var(--color-bg);
     color: var(--color-icon-editor);
 
-    &:active, &:focus-visible {
+    &:active {
       background: var(--color-action-hover);
     }
   }
 
   &__formats {
-    position: absolute;
-    z-index: 1;
-    top: calc(32px + var(--space-8));
-    display: grid;
+    position: fixed;
+    inset: auto var(--space-16) var(--space-16);
+    display: none;
     width: max-content;
+    max-width: calc(100vw - 2 * var(--space-16));
+    margin: 0 auto;
     padding: var(--space-8);
+    border: 0;
     border-radius: 8px;
     background: var(--color-surface);
     box-shadow: 0 3px 18px rgb(20 20 42 / 15%);
+
+    &:popover-open {
+      display: grid;
+    }
+
+    @supports (top: anchor(bottom)) {
+      position-anchor: var(--formats-anchor);
+      inset: auto;
+      top: calc(anchor(bottom) + var(--space-8));
+      left: anchor(left);
+      margin: 0;
+      position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+    }
 
     button {
       padding: 4px var(--space-12);
@@ -105,8 +156,12 @@ defineExpose({
       border-radius: 4px;
       background: transparent;
       text-align: start;
-      &:active, &:focus-visible {
+      &:enabled:active {
         background: var(--color-bg);
+      }
+      &:disabled {
+        opacity: .6;
+        cursor: default;
       }
     }
   }
@@ -115,6 +170,9 @@ defineExpose({
     :deep(.tiptap) {
       min-height: 180px;
       overflow-wrap: anywhere;
+    }
+    :deep(.tiptap:focus-visible) {
+      outline: none;
     }
     :deep(.is-editor-empty:first-child::before) {
       float: left;
@@ -136,7 +194,7 @@ defineExpose({
     background: var(--color-action-hover);
   }
 
-  .rich-text__formats button:hover {
+  .rich-text__formats button:enabled:hover {
     background: var(--color-bg);
   }
 }

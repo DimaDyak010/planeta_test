@@ -27,13 +27,25 @@
                     rows="1" />
         </div>
         <ClientOnly>
-          <MaterialEditor ref="editor" />
+          <MaterialEditor ref="editor">
+            <template #actions>
+              <button
+                ref="dateButton"
+                class="composer__date-button"
+                type="button"
+                aria-label="Дата и время создания"
+                popovertarget="material-date-picker"
+              >
+                <AppIcon name="calendar" />
+              </button>
+              <label id="material-date-picker" class="composer__date-picker" popover="auto">
+                Дата и время создания
+                <input ref="dateInput" v-model="datetime" type="datetime-local">
+              </label>
+            </template>
+          </MaterialEditor>
         </ClientOnly>
         <p v-if="error" class="composer__error" role="alert">{{ error }}</p>
-        <label class="composer__date">
-          Дата создания
-          <input v-model="datetime" type="datetime-local" required>
-        </label>
       </form>
     </main>
   </NuxtLayout>
@@ -54,6 +66,8 @@ useHead({ title: 'Создание материала' })
 const title = ref('')
 const summary = ref('')
 const datetime = ref('')
+const dateButton = ref<HTMLButtonElement | null>(null)
+const dateInput = ref<HTMLInputElement | null>(null)
 const editor = ref<{ getContent: () => { html: string, json: Record<string, unknown> } | null }>()
 const saving = ref(false)
 const { addMaterial } = useMaterials()
@@ -79,6 +93,11 @@ async function save() {
   const date = new Date(datetime.value)
   if (Number.isNaN(date.getTime())) {
     error.value = 'Укажите дату и время создания.'
+    if (!dateInput.value?.closest(':popover-open')) {
+      dateButton.value?.focus()
+      dateButton.value?.click()
+    }
+    dateInput.value?.focus()
     return
   }
   const content = editor.value?.getContent()
@@ -116,6 +135,10 @@ async function save() {
   gap: var(--space-32);
   padding-block: var(--page-top) var(--space-32);
 
+  &__form :is(input, textarea):focus-visible {
+    outline: none;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
@@ -151,18 +174,61 @@ async function save() {
     font-size: 22px;
     font-weight: 500;
     line-height: 1.2;
-    resize: vertical;
+    resize: none;
+    scrollbar-width: none;
     field-sizing: content;
   }
-  &__date {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+  &__date-button {
+    --icon-height: 20px;
+
+    anchor-name: --material-date-button;
+    display: grid;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: var(--color-bg);
+    color: var(--color-icon-editor);
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:active, &:has(+ .composer__date-picker:popover-open) {
+      background: var(--color-action-hover);
+    }
+  }
+
+  &__date-picker {
+    position: fixed;
+    inset: auto var(--space-16) var(--space-16);
+    display: none;
     gap: var(--space-8);
-    margin-block-start: auto;
-    padding-inline-start: 106px;
+    width: max-content;
+    max-width: calc(100vw - 80px);
+    margin: 0 auto;
+    padding: var(--space-12);
+    border: 0;
+    border-radius: var(--radius-12);
+    background: var(--color-surface);
+    box-shadow: 0 3px 18px rgb(20 20 42 / 15%);
     color: var(--color-secondary);
     font-size: 16px;
+
+    &:popover-open {
+      display: grid;
+    }
+
+    @supports (bottom: anchor(top)) {
+      position-anchor: --material-date-button;
+      inset: auto;
+      bottom: calc(anchor(top) + var(--space-8));
+      left: anchor(left);
+      margin: 0;
+      position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+    }
 
     input {
       max-width: 100%;
@@ -175,6 +241,12 @@ async function save() {
 
   &__error {
     color: var(--color-error);
+  }
+}
+
+@media (hover: hover) {
+  .composer__date-button:hover {
+    background: var(--color-action-hover);
   }
 }
 
@@ -192,9 +264,6 @@ async function save() {
     }
     &__fields {
       gap: var(--space-12);
-      padding: 0;
-    }
-    &__date {
       padding: 0;
     }
     &__summary {
