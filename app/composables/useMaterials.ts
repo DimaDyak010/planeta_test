@@ -1,4 +1,4 @@
-import type { Material } from '#shared/types/material'
+import type { Material, MaterialInput } from '#shared/types/material'
 import { mockMaterials } from '~/mocks/materials'
 
 export function useMaterials() {
@@ -12,5 +12,14 @@ export function useMaterials() {
     created.value.push(material)
   }
 
-  return { materials, addMaterial }
+  async function createMaterial(body: MaterialInput) {
+    const material = await $fetch<Material>('/api/materials', {
+      method: 'POST',
+      body,
+    })
+    addMaterial(material)
+    return material
+  }
+
+  return { materials, addMaterial, createMaterial }
 }

@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import AppIcon from '~/components/AppIcon.vue'
+import AppIcon from '~/components/ui/AppIcon.vue'
 </script>
 
 <style scoped lang="less">

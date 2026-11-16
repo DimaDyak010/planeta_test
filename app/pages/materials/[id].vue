@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import BackLink from '~/components/BackLink.vue'
-import MaterialDate from '~/components/MaterialDate.vue'
+import MaterialDate from '~/components/Material/MaterialDate.vue'
+import BackLink from '~/components/ui/BackLink.vue'
 import { useMaterials } from '~/composables/useMaterials'
 
 const route = useRoute()

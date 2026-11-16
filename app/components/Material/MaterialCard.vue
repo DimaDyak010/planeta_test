@@ -1,14 +1,16 @@
 <template>
   <NuxtLink class="card" :to="`/materials/${encodeURIComponent(material.id)}`">
     <MaterialDate :datetime="material.datetime" />
+
     <h2 class="card__title">{{ material.title }}</h2>
+
     <p class="card__description">{{ material.short_description }}</p>
   </NuxtLink>
 </template>
 
 <script setup lang="ts">
 import type { Material } from '#shared/types/material'
-import MaterialDate from '~/components/MaterialDate.vue'
+import MaterialDate from './MaterialDate.vue'
 
 defineProps<{ material: Material }>()
 </script>

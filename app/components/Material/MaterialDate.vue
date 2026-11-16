@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import AppIcon from '~/components/AppIcon.vue'
+import AppIcon from '~/components/ui/AppIcon.vue'
 
 const { datetime, variant = 'card' } = defineProps<{
   datetime: string

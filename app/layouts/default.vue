@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import AppButton from '~/components/AppButton.vue'
-import AppHeader from '~/components/AppHeader.vue'
-import AppIcon from '~/components/AppIcon.vue'
+import AppButton from '~/components/ui/AppButton.vue'
+import AppHeader from '~/components/ui/AppHeader.vue'
+import AppIcon from '~/components/ui/AppIcon.vue'
 </script>
