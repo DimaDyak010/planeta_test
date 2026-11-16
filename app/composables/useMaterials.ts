@@ -1,15 +1,10 @@
 import type { Material, MaterialInput } from '#shared/types/material'
-import { mockMaterials } from '~/mocks/materials'
 
 export function useMaterials() {
-  const created = useState<Material[]>('created-materials', () => [])
-  const materials = computed(() => {
-    const byId = new Map([...mockMaterials, ...created.value].map(material => [String(material.id), material]))
-    return [...byId.values()].sort((a, b) => Date.parse(b.datetime) - Date.parse(a.datetime))
-  })
+  const lastCreated = useState<Material | null>('last-created-material', () => null)
 
-  function addMaterial(material: Material) {
-    created.value.push(material)
+  function loadMaterials() {
+    return useFetch<Material[]>('/api/materials', { key: 'materials' })
   }
 
   async function createMaterial(body: MaterialInput) {
@@ -17,9 +12,10 @@ export function useMaterials() {
       method: 'POST',
       body,
     })
-    addMaterial(material)
+    lastCreated.value = material
+    clearNuxtData('materials')
     return material
   }
 
-  return { materials, addMaterial, createMaterial }
+  return { loadMaterials, lastCreated, createMaterial }
 }

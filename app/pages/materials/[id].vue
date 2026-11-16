@@ -15,16 +15,27 @@
 </template>
 
 <script setup lang="ts">
-import MaterialDate from '~/components/Material/MaterialDate.vue'
 import BackLink from '~/components/ui/BackLink.vue'
+import MaterialDate from '~/components/Material/MaterialDate.vue'
 import { useMaterials } from '~/composables/useMaterials'
 
-const route = useRoute()
-const { materials } = useMaterials()
-const data = computed(() => materials.value.find(item => String(item.id) === String(route.params.id)))
+definePageMeta({ key: route => route.path })
 
-if (!data.value) throw createError({ statusCode: 404, statusMessage: 'Material not found', fatal: true })
-useHead(() => ({ title: data.value?.title ?? 'Материал' }))
+const route = useRoute()
+const { loadMaterials, lastCreated } = useMaterials()
+const id = String(route.params.id)
+let data = lastCreated.value && String(lastCreated.value.id) === id ? lastCreated.value : null
+
+if (data) {
+  lastCreated.value = null
+} else {
+  const { data: materials, error } = await loadMaterials()
+  if (error.value) throw createError({ statusCode: error.value.statusCode ?? 502, fatal: true })
+  data = materials.value?.find(item => String(item.id) === id) ?? null
+}
+
+if (!data) throw createError({ statusCode: 404, statusMessage: 'Material not found', fatal: true })
+useHead({ title: data.title })
 </script>
 
 <style scoped lang="less">

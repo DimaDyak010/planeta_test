@@ -2,11 +2,13 @@
   <main class="page-width materials">
     <h1 class="page-title">Материалы</h1>
 
-    <ul class="materials__list">
-      <li v-for="material in materials" :key="material.id">
+    <p v-if="error" role="alert">Не удалось загрузить материалы.</p>
+    <ul v-else-if="materials?.length" class="materials__list">
+      <li v-for="material in materials" :key="material.id" class="materials__item">
         <MaterialCard :material="material" />
       </li>
     </ul>
+    <p v-else>Материалов пока нет.</p>
   </main>
 </template>
 
@@ -14,7 +16,8 @@
 import MaterialCard from '~/components/Material/MaterialCard.vue'
 import { useMaterials } from '~/composables/useMaterials'
 
-const { materials } = useMaterials()
+const { loadMaterials } = useMaterials()
+const { data: materials, error } = await loadMaterials()
 
 useSeoMeta({
   title: 'Материалы «Моя Планета»',
@@ -31,10 +34,15 @@ useSeoMeta({
   &__list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-auto-rows: 1fr;
     gap: var(--space-40);
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  &__item {
+    display: grid;
   }
 }
 
