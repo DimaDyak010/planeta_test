@@ -49,6 +49,10 @@ const label = computed(() => {
 
     gap: var(--space-12);
     font-size: 20px;
+
+    .date__label {
+      line-height: 1.4;
+    }
   }
 }
 
@@ -67,6 +71,10 @@ const label = computed(() => {
     gap: var(--space-8);
     font-size: 18px;
     font-weight: 500;
+
+    .date__label {
+      line-height: 1.2;
+    }
   }
 }
 </style>
