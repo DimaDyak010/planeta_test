@@ -5,6 +5,10 @@
   </NuxtLink>
 </template>
 
+<script setup lang="ts">
+import AppIcon from '~/components/AppIcon.vue'
+</script>
+
 <style scoped lang="less">
 .back-link {
   display: inline-flex;

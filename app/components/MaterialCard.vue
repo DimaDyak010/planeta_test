@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import type { Material } from '#shared/types/material'
+import MaterialDate from '~/components/MaterialDate.vue'
 
 defineProps<{ material: Material }>()
 </script>

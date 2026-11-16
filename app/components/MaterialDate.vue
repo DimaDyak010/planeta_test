@@ -6,6 +6,8 @@
 </template>
 
 <script setup lang="ts">
+import AppIcon from '~/components/AppIcon.vue'
+
 const { datetime, variant = 'card' } = defineProps<{
   datetime: string
   variant?: 'card' | 'detail'

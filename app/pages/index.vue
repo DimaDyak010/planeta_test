@@ -11,6 +11,9 @@
 </template>
 
 <script setup lang="ts">
+import MaterialCard from '~/components/MaterialCard.vue'
+import { useMaterials } from '~/composables/useMaterials'
+
 const { materials } = useMaterials()
 </script>
 

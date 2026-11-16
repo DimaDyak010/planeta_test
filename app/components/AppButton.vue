@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components'
 import type { NuxtLinkProps } from 'nuxt/app'
+import AppIcon from '~/components/AppIcon.vue'
 
 const props = withDefaults(defineProps<{
   variant?: 'text' | 'square'

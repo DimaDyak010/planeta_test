@@ -1,5 +1,15 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
+  components: false,
+  imports: {
+    scan: false,
+  },
+  nitro: {
+    imports: {
+      // Keep built-in imports while skipping project files such as server/utils.
+      dirsScanOptions: { fileFilter: () => false },
+    },
+  },
   runtimeConfig: {
     materialsAlias: '',
   },
