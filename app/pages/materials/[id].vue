@@ -26,7 +26,13 @@ const { data, error } = await loadMaterial(routeId)
 
 if (error.value) throw createError({ statusCode: error.value.statusCode ?? 502, fatal: true })
 
-useHead({ title: data.value.title })
+useSeoMeta({
+  title: () => data.value?.title ?? 'Материал',
+  description: () => data.value?.short_description ?? '',
+  ogTitle: () => data.value?.title ?? 'Материал',
+  ogDescription: () => data.value?.short_description ?? '',
+  ogType: 'article',
+})
 </script>
 
 <style scoped lang="less">

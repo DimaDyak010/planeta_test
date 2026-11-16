@@ -20,8 +20,11 @@ const { loadMaterials } = useMaterials()
 const { data: materials, error } = await loadMaterials()
 
 useSeoMeta({
-  title: 'Материалы «Моя Планета»',
+  title: 'Материалы',
   description: 'Список материалов «Моя Планета» с датами публикации и краткими описаниями.',
+  ogTitle: 'Материалы | Моя Планета',
+  ogDescription: 'Список материалов «Моя Планета» с датами публикации и краткими описаниями.',
+  ogType: 'website',
 })
 </script>
 

@@ -8,9 +8,7 @@
                 rows="1" />
     </div>
 
-    <ClientOnly>
-      <MaterialEditor ref="editor" v-model:datetime="draft.datetime" @content-change="updateError" />
-    </ClientOnly>
+    <MaterialEditor ref="editor" v-model:datetime="draft.datetime" @content-change="updateError" />
 
     <p v-if="error" class="composer__error" role="alert">{{ error }}</p>
   </form>
