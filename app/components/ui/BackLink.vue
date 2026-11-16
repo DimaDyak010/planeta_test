@@ -16,7 +16,7 @@ import AppIcon from '~/components/ui/AppIcon.vue'
   gap: var(--space-12);
   height: 24px;
   color: var(--color-text);
-  font-size: 18px;
+  font-size: var(--font-size-18);
   font-weight: 500;
   line-height: normal;
   text-decoration: none;

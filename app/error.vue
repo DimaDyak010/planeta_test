@@ -70,7 +70,7 @@ useHead(() => ({ title: title.value }))
     }
 
     &__description {
-      font-size: 18px;
+      font-size: var(--font-size-18);
     }
   }
 }

@@ -34,7 +34,7 @@ const { notification, dismiss } = useNotifications()
   background: var(--color-surface);
   box-shadow: var(--card-shadow);
   color: var(--color-text);
-  font: 500 18px / 1.3 var(--font-body);
+  font: 500 var(--font-size-18) / 1.3 var(--font-body);
 
   &--error {
     --notification-accent: var(--color-error);
@@ -42,11 +42,11 @@ const { notification, dismiss } = useNotifications()
 
   &__close {
     flex: none;
-    width: 32px;
-    height: 32px;
+    width: var(--control-size-32);
+    height: var(--control-size-32);
     padding: 0;
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-8);
     background: var(--color-bg);
     font-size: 24px;
     line-height: 1;

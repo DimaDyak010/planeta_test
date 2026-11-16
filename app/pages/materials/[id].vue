@@ -57,9 +57,9 @@ useSeoMeta({
     gap: var(--space-24);
   }
   &__summary {
-    font-size: 22px;
+    font-size: var(--font-size-22);
     font-weight: 500;
-    line-height: 1.2;
+    line-height: var(--line-height-tight);
   }
   &__content {
     :deep(p + p), :deep(h1), :deep(h2), :deep(h3), :deep(blockquote) {
@@ -67,7 +67,7 @@ useSeoMeta({
     }
     :deep(h1), :deep(h2), :deep(h3) {
       font-family: var(--font-heading);
-      line-height: 1.2;
+      line-height: var(--line-height-tight);
     }
     :deep(blockquote) {
       margin-inline: 0;
@@ -97,10 +97,10 @@ useSeoMeta({
       border-radius: var(--radius-card);
     }
     &__summary {
-      font-size: 18px;
+      font-size: var(--font-size-18);
     }
     &__content {
-      font-size: 16px;
+      font-size: var(--font-size-16);
     }
   }
 }

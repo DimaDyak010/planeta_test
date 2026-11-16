@@ -101,7 +101,7 @@ defineExpose({
     display: flex;
     flex-direction: column;
     gap: var(--space-8);
-    font-size: 16px;
+    font-size: var(--font-size-16);
     &__controls {
       order: 1;
     }

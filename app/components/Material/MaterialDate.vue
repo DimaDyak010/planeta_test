@@ -38,7 +38,7 @@ const label = computed(() => {
   align-items: center;
   gap: var(--space-8);
   color: var(--color-muted);
-  font-size: 16px;
+  font-size: var(--font-size-16);
 
   &__label {
     line-height: 1;
@@ -48,7 +48,7 @@ const label = computed(() => {
     --icon-height: 24px;
 
     gap: var(--space-12);
-    font-size: 20px;
+    font-size: var(--font-size-20);
 
     .date__label {
       line-height: 1.4;
@@ -60,7 +60,7 @@ const label = computed(() => {
   .date {
     --icon-height: 16px;
 
-    font-size: 14px;
+    font-size: var(--font-size-14);
   }
   .date--card {
     min-block-size: 18px;
@@ -69,11 +69,11 @@ const label = computed(() => {
     --icon-height: 20px;
 
     gap: var(--space-8);
-    font-size: 18px;
+    font-size: var(--font-size-18);
     font-weight: 500;
 
     .date__label {
-      line-height: 1.2;
+      line-height: var(--line-height-tight);
     }
   }
 }

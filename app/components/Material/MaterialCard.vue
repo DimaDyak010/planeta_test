@@ -31,7 +31,7 @@ defineProps<{ material: Material }>()
     box-shadow: var(--card-shadow);
   }
   &__title {
-    font: 600 20px / 1.2 var(--font-heading);
+    font: 600 var(--font-size-20) / var(--line-height-tight) var(--font-heading);
   }
   &__description {
     display: -webkit-box;
@@ -39,8 +39,8 @@ defineProps<{ material: Material }>()
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     color: var(--color-secondary);
-    font-size: 16px;
-    line-height: 1.2;
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-tight);
   }
 }
 
@@ -59,11 +59,11 @@ defineProps<{ material: Material }>()
       overflow: hidden;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 3;
-      font-size: 18px;
+      font-size: var(--font-size-18);
       line-height: 22px;
     }
     &__description {
-      font-size: 14px;
+      font-size: var(--font-size-14);
       line-height: 18px;
     }
   }

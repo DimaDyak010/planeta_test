@@ -122,9 +122,9 @@ function getValidationError() {
     font: 600 var(--heading-size) / 1.2 var(--font-heading);
   }
   &__summary {
-    font-size: 22px;
+    font-size: var(--font-size-22);
     font-weight: 500;
-    line-height: 1.2;
+    line-height: var(--line-height-tight);
     resize: none;
     scrollbar-width: none;
     field-sizing: content;
@@ -141,14 +141,14 @@ function getValidationError() {
       margin: 0;
       padding: 20px var(--space-16);
       gap: var(--space-24);
-      border-radius: 16px;
+      border-radius: var(--radius-16);
     }
     &__fields {
       gap: var(--space-12);
       padding: 0;
     }
     &__summary {
-      font-size: 18px;
+      font-size: var(--font-size-18);
     }
   }
 }

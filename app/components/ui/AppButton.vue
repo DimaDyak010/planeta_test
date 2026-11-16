@@ -81,7 +81,7 @@ function handleClick(event: MouseEvent) {
   border-radius: var(--radius-button);
   background: var(--color-accent-bg);
   color: var(--color-accent);
-  font-size: 18px;
+  font-size: var(--font-size-18);
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;

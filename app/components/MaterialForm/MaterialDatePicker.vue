@@ -42,12 +42,12 @@ defineExpose({ openAndFocus })
 
     anchor-name: var(--date-anchor);
     display: grid;
-    width: 32px;
-    height: 32px;
+    width: var(--control-size-32);
+    height: var(--control-size-32);
     padding: 0;
     place-items: center;
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-8);
     background: var(--color-bg);
     color: var(--color-icon-editor);
 
@@ -72,9 +72,9 @@ defineExpose({ openAndFocus })
     border: 0;
     border-radius: var(--radius-12);
     background: var(--color-surface);
-    box-shadow: 0 3px 18px rgb(20 20 42 / 15%);
+    box-shadow: var(--shadow-popover);
     color: var(--color-secondary);
-    font-size: 16px;
+    font-size: var(--font-size-16);
 
     &:popover-open {
       display: grid;
@@ -93,7 +93,7 @@ defineExpose({ openAndFocus })
       max-width: 100%;
       padding: 4px 8px;
       border: 1px solid var(--color-muted);
-      border-radius: 8px;
+      border-radius: var(--radius-8);
       color: var(--color-text);
 
       &:focus-visible {

@@ -64,12 +64,12 @@ function applyFormat(format: Format) {
 
     anchor-name: var(--formats-anchor);
     display: grid;
-    width: 32px;
-    height: 32px;
+    width: var(--control-size-32);
+    height: var(--control-size-32);
     padding: 0;
     place-items: center;
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-8);
     background: var(--color-bg);
     color: var(--color-icon-editor);
 
@@ -87,9 +87,9 @@ function applyFormat(format: Format) {
     margin: 0 auto;
     padding: var(--space-8);
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-8);
     background: var(--color-surface);
-    box-shadow: 0 3px 18px rgb(20 20 42 / 15%);
+    box-shadow: var(--shadow-popover);
 
     &:popover-open {
       display: grid;
