@@ -15,6 +15,11 @@ import MaterialCard from '~/components/MaterialCard.vue'
 import { useMaterials } from '~/composables/useMaterials'
 
 const { materials } = useMaterials()
+
+useSeoMeta({
+  title: 'Материалы «Моя Планета»',
+  description: 'Список материалов «Моя Планета» с датами публикации и краткими описаниями.',
+})
 </script>
 
 <style scoped lang="less">
