@@ -31,6 +31,10 @@ defineProps<{ material: Material }>()
     box-shadow: var(--card-shadow);
   }
   &__title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
     font: 600 var(--font-size-20) / var(--line-height-tight) var(--font-heading);
   }
   &__description {
@@ -55,10 +59,6 @@ defineProps<{ material: Material }>()
     gap: var(--space-16);
     padding: var(--space-24);
     &__title {
-      display: -webkit-box;
-      overflow: hidden;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
       font-size: var(--font-size-18);
       line-height: 22px;
     }
