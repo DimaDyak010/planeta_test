@@ -1,4 +1,8 @@
 export default defineNuxtConfig({
+  devtools: { enabled: false },
+  runtimeConfig: {
+    materialsAlias: '',
+  },
   css: ['~/assets/styles/main.less'],
   app: {
     head: {
