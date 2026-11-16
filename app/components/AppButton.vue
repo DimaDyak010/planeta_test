@@ -139,6 +139,10 @@ function handleClick(event: MouseEvent) {
     padding: 0;
   }
 
+  &--square &__spinner {
+    --icon-height: 24px;
+  }
+
   &--square-on-mobile &__icon {
     display: none;
   }
@@ -162,6 +166,10 @@ function handleClick(event: MouseEvent) {
 
     .app-button__icon {
       display: inline-flex;
+    }
+
+    .app-button__spinner {
+      --icon-height: 24px;
     }
   }
 }
