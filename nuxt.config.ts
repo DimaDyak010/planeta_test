@@ -18,6 +18,7 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'ru' },
       title: 'Материалы',
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         {
           rel: 'preload',
           href: '/fonts/SourceSans3-VariableFont_wght.woff2',
