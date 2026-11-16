@@ -12,8 +12,16 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@tiptap/extension-placeholder": "^3.34.0",
+    "@tiptap/pm": "^3.34.0",
+    "@tiptap/starter-kit": "^3.34.0",
+    "@tiptap/vue-3": "^3.34.0",
     "less": "4.9.1",
     "nuxt": "4.6.4",
     "vue": "3.5.45"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.14"
   }
 }
